@@ -1,0 +1,208 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background-color: $color-bg-page;
+  padding: 0 $page-padding $spacing-xl;
+}
+
+.header {
+  padding: $spacing-lg 0;
+}
+
+.title {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.subtitle {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+}
+
+.statusTabs {
+  display: flex;
+  background-color: $color-bg-card;
+  border-radius: $radius-md;
+  padding: 8rpx;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.tabItem {
+  flex: 1;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-sm;
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  transition: all $transition-fast;
+
+  &.active {
+    background-color: $color-primary;
+    color: $color-text-white;
+  }
+}
+
+.mealCard {
+  background-color: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.restaurantInfo {
+  display: flex;
+  margin-bottom: $spacing-md;
+}
+
+.restaurantImage {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: $radius-md;
+  margin-right: $spacing-md;
+}
+
+.restaurantDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.restaurantName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.restaurantTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+}
+
+.timeInfo {
+  display: flex;
+  align-items: center;
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+}
+
+.timeIcon {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: $spacing-xs;
+}
+
+.participants {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md 0;
+  border-top: 1rpx solid $color-divider;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.avatarGroup {
+  display: flex;
+  margin-right: $spacing-md;
+}
+
+.avatarItem {
+  margin-left: -16rpx;
+  border: 4rpx solid $color-bg-card;
+}
+
+.avatarItem:first-child {
+  margin-left: 0;
+}
+
+.participantCount {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.mealTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin-top: $spacing-md;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: $spacing-md;
+}
+
+.joinButton {
+  height: $button-height-md;
+  padding: 0 $spacing-xl;
+  border-radius: $radius-button;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: $color-text-white;
+  font-size: $font-size-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.statusBadge {
+  padding: 8rpx 16rpx;
+  border-radius: $radius-round;
+  font-size: $font-size-xs;
+
+  &.pending {
+    background-color: rgba($color-warning, 0.1);
+    color: $color-warning;
+  }
+
+  &.ongoing {
+    background-color: rgba($color-success, 0.1);
+    color: $color-success;
+  }
+
+  &.finished {
+    background-color: rgba($color-text-tertiary, 0.1);
+    color: $color-text-tertiary;
+  }
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xl * 2;
+}
+
+.emptyIcon {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: $spacing-lg;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-md;
+}
+
+.emptyButton {
+  height: $button-height-md;
+  padding: 0 $spacing-xl;
+  border-radius: $radius-button;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: $color-text-white;
+  font-size: $font-size-md;
+}

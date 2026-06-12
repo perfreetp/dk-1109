@@ -1,0 +1,38 @@
+@use '@/styles/variables.scss' as *;
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-sm;
+  padding: 4rpx 12rpx;
+  white-space: nowrap;
+}
+
+.tag-small {
+  font-size: $font-size-xs;
+}
+
+.tag-medium {
+  font-size: $font-size-sm;
+}
+
+.tag-primary {
+  background-color: rgba($color-primary, 0.1);
+  color: $color-primary;
+}
+
+.tag-success {
+  background-color: rgba($color-success, 0.1);
+  color: $color-success;
+}
+
+.tag-warning {
+  background-color: rgba($color-warning, 0.1);
+  color: $color-warning;
+}
+
+.tag-info {
+  background-color: rgba($color-info, 0.1);
+  color: $color-info;
+}

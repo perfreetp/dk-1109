@@ -1,0 +1,308 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background-color: $color-bg-page;
+  padding: 0 $page-padding $spacing-xl;
+}
+
+.header {
+  padding: $spacing-lg 0;
+}
+
+.title {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.subtitle {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  margin-top: $spacing-sm;
+}
+
+.formSection {
+  background-color: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-top: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.timeOptions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.timeOption {
+  flex: 1;
+  height: 120rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-md;
+  background-color: $color-bg-page;
+  border: 2rpx solid transparent;
+  transition: all $transition-fast;
+
+  &.active {
+    border-color: $color-primary;
+    background-color: rgba($color-primary, 0.05);
+  }
+}
+
+.timeValue {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.timeLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-top: 4rpx;
+}
+
+.restaurantSelector {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  border-radius: $radius-md;
+  background-color: $color-bg-page;
+}
+
+.restaurantImage {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: $radius-sm;
+  margin-right: $spacing-md;
+}
+
+.restaurantName {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.arrowIcon {
+  font-size: $font-size-lg;
+  color: $color-text-tertiary;
+}
+
+.dishInput {
+  width: 100%;
+  height: $button-height-lg;
+  padding: 0 $spacing-md;
+  border-radius: $radius-md;
+  background-color: $color-bg-page;
+  font-size: $font-size-md;
+  box-sizing: border-box;
+}
+
+.preferredDishes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+}
+
+.dishTag {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-button;
+  background-color: rgba($color-primary, 0.1);
+  color: $color-primary;
+  font-size: $font-size-sm;
+}
+
+.removeIcon {
+  margin-left: $spacing-xs;
+  font-size: $font-size-sm;
+}
+
+.optionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+}
+
+.optionItem {
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-md;
+  background-color: $color-bg-page;
+  border: 2rpx solid transparent;
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  transition: all $transition-fast;
+
+  &.active {
+    border-color: $color-primary;
+    background-color: rgba($color-primary, 0.05);
+    color: $color-primary;
+  }
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toggleLabel {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.toggleSwitch {
+  width: 100rpx;
+  height: 56rpx;
+  border-radius: $radius-round;
+  background-color: $color-border;
+  position: relative;
+  transition: all $transition-fast;
+
+  &.active {
+    background-color: $color-primary;
+  }
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 4rpx;
+  left: 4rpx;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-round;
+  background-color: $color-text-white;
+  transition: all $transition-fast;
+
+  .toggleSwitch.active & {
+    left: 48rpx;
+  }
+}
+
+.submitButton {
+  height: $button-height-lg;
+  border-radius: $radius-button;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: $color-text-white;
+  font-size: $font-size-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: $spacing-xl;
+
+  &:active {
+    opacity: 0.9;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  z-index: 1000;
+}
+
+.modalContent {
+  width: 100%;
+  max-height: 70vh;
+  background-color: $color-bg-card;
+  border-radius: $radius-xl $radius-xl 0 0;
+  padding: $spacing-lg;
+  padding-bottom: calc($spacing-lg + env(safe-area-inset-bottom));
+}
+
+.modalTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-lg;
+}
+
+.restaurantList {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.restaurantItem {
+  display: flex;
+  padding: $spacing-md;
+  border-radius: $radius-md;
+
+  &:active {
+    background-color: $color-bg-hover;
+  }
+}
+
+.restaurantItemImage {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: $radius-sm;
+  margin-right: $spacing-md;
+}
+
+.restaurantItemInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.restaurantItemName {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.restaurantItemTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin-top: $spacing-xs;
+}
+
+.successModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-xl * 2;
+}
+
+.successIcon {
+  font-size: 120rpx;
+  margin-bottom: $spacing-lg;
+}
+
+.successText {
+  font-size: $font-size-lg;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.successSubtitle {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+}

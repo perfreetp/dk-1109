@@ -1,0 +1,25 @@
+@use '@/styles/variables.scss' as *;
+
+.avatar {
+  border-radius: $radius-round;
+  background-color: $color-bg-hover;
+}
+
+.avatar-small {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.avatar-medium {
+  width: 88rpx;
+  height: 88rpx;
+}
+
+.avatar-large {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.hasBorder {
+  border: 4rpx solid $color-primary;
+}
