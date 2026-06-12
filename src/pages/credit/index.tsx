@@ -3,37 +3,21 @@ import { View, Text, Image, ScrollView, Input } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import styles from './index.module.scss'
 import Tag from '@/components/Tag'
-import { mockCreditRecords, mockUsers, mockTopicCards, currentUser } from '@/data/mockData'
+import { mockTopicCards, currentUser } from '@/data/mockData'
+import { useAppStore } from '@/store/appStore'
 import type { User } from '@/types'
 
 const CreditPage: React.FC = () => {
-  const [favoriteFriends, setFavoriteFriends] = useState<User[]>(mockUsers.slice(0, 3))
-  const [blockedUsers, setBlockedUsers] = useState<User[]>([])
   const [allergies, setAllergies] = useState(['海鲜', '花生'])
   const [showAllergyModal, setShowAllergyModal] = useState(false)
   const [newAllergy, setNewAllergy] = useState('')
   const [activeTab, setActiveTab] = useState<'credits' | 'friends' | 'blocked'>('credits')
 
-  const toggleFavorite = (user: User) => {
-    if (favoriteFriends.find(f => f.id === user.id)) {
-      setFavoriteFriends(favoriteFriends.filter(f => f.id !== user.id))
-      Taro.showToast({ title: '已取消收藏', icon: 'none' })
-    } else {
-      setFavoriteFriends([...favoriteFriends, user])
-      Taro.showToast({ title: '已收藏', icon: 'success' })
-    }
-  }
-
-  const toggleBlock = (user: User) => {
-    if (blockedUsers.find(b => b.id === user.id)) {
-      setBlockedUsers(blockedUsers.filter(b => b.id !== user.id))
-      Taro.showToast({ title: '已解除屏蔽', icon: 'none' })
-    } else {
-      setBlockedUsers([...blockedUsers, user])
-      setFavoriteFriends(favoriteFriends.filter(f => f.id !== user.id))
-      Taro.showToast({ title: '已屏蔽', icon: 'none' })
-    }
-  }
+  const favoriteFriends = useAppStore((state) => state.favoriteFriends)
+  const blockedUsers = useAppStore((state) => state.blockedUsers)
+  const creditRecords = useAppStore((state) => state.creditRecords)
+  const toggleFavorite = useAppStore((state) => state.toggleFavorite)
+  const toggleBlock = useAppStore((state) => state.toggleBlock)
 
   const handleAddAllergy = () => {
     if (!newAllergy.trim()) {
@@ -48,6 +32,14 @@ const CreditPage: React.FC = () => {
 
   const handleRemoveAllergy = (allergy: string) => {
     setAllergies(allergies.filter(a => a !== allergy))
+  }
+
+  const handleToggleFriend = (user: User, action: 'favorite' | 'block') => {
+    if (action === 'favorite') {
+      toggleFavorite(user)
+    } else {
+      toggleBlock(user)
+    }
   }
 
   return (
@@ -70,11 +62,11 @@ const CreditPage: React.FC = () => {
             <Text className={styles.creditLabel}>信用评分</Text>
           </View>
           <View className={styles.creditItem}>
-            <Text className={styles.creditValue}>12</Text>
-            <Text className={styles.creditLabel}>完成饭局</Text>
+            <Text className={styles.creditValue}>{creditRecords.length}</Text>
+            <Text className={styles.creditLabel}>评价记录</Text>
           </View>
           <View className={styles.creditItem}>
-            <Text className={styles.creditValue}>5</Text>
+            <Text className={styles.creditValue}>{favoriteFriends.length}</Text>
             <Text className={styles.creditLabel}>常用饭友</Text>
           </View>
         </View>
@@ -96,7 +88,7 @@ const CreditPage: React.FC = () => {
       <View className={styles.section}>
         <Text className={styles.sectionTitle}>🏆 信用记录</Text>
         <View className={styles.recordList}>
-          {mockCreditRecords.map(record => (
+          {creditRecords.map(record => (
             <View key={record.id} className={styles.recordItem}>
               <View className={[styles.recordIcon, styles[record.type]].join(' ')}>
                 {record.type === 'positive' ? '+' : '-'}
@@ -154,7 +146,7 @@ const CreditPage: React.FC = () => {
                     <Text className={styles.friendName}>{friend.name}</Text>
                     <Text className={styles.friendScore}>信用分: {friend.creditScore}</Text>
                   </View>
-                  <View className={styles.friendAction} onClick={() => toggleFavorite(friend)}>
+                  <View className={styles.friendAction} onClick={() => handleToggleFriend(friend, 'favorite')}>
                     取消收藏
                   </View>
                 </View>
@@ -175,7 +167,7 @@ const CreditPage: React.FC = () => {
                     <Text className={styles.friendName}>{user.name}</Text>
                     <Text className={styles.friendScore}>信用分: {user.creditScore}</Text>
                   </View>
-                  <View className={[styles.friendAction, styles.active].join(' ')} onClick={() => toggleBlock(user)}>
+                  <View className={[styles.friendAction, styles.active].join(' ')} onClick={() => handleToggleFriend(user, 'block')}>
                     解除屏蔽
                   </View>
                 </View>

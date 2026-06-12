@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, Image, ScrollView, Input } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import styles from './index.module.scss'
 import Tag from '@/components/Tag'
 import { mockRestaurants, currentUser } from '@/data/mockData'
-import type { Restaurant } from '@/types'
+import { useAppStore } from '@/store/appStore'
+import type { Restaurant, MealEvent } from '@/types'
 
 const CreatePage: React.FC = () => {
   const [timeWindow, setTimeWindow] = useState<number>(45)
@@ -16,6 +17,21 @@ const CreatePage: React.FC = () => {
   const [chatLevel, setChatLevel] = useState<'silent' | 'normal' | 'chatty'>('normal')
   const [showRestaurantModal, setShowRestaurantModal] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  
+  const addMealEvent = useAppStore((state) => state.addMealEvent)
+
+  useEffect(() => {
+    const pages = Taro.getCurrentPages()
+    const currentPage = pages[pages.length - 1]
+    const options = (currentPage as any)?.options || {}
+    
+    if (options.restaurantId) {
+      const restaurant = mockRestaurants.find(r => r.id === options.restaurantId)
+      if (restaurant) {
+        setSelectedRestaurant(restaurant)
+      }
+    }
+  }, [])
 
   const handleAddDish = () => {
     if (dishInput.trim() && !preferredDishes.includes(dishInput.trim())) {
@@ -37,6 +53,27 @@ const CreatePage: React.FC = () => {
       return
     }
 
+    const now = new Date()
+    const meetingTime = `${now.getHours()}:${String(now.getMinutes() + 30).padStart(2, '0')}`
+    
+    const newEvent: MealEvent = {
+      id: String(Date.now()),
+      restaurant: selectedRestaurant,
+      timeWindow,
+      maxPeople: 4,
+      currentPeople: 1,
+      status: 'pending',
+      creator: currentUser,
+      participants: [currentUser],
+      dishes: preferredDishes,
+      queueAcceptance,
+      isRushed,
+      chatLevel,
+      createdAt: now.toLocaleString('zh-CN'),
+      meetingTime
+    }
+
+    addMealEvent(newEvent)
     setShowSuccessModal(true)
   }
 
